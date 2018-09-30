@@ -1,0 +1,45 @@
+Yandex translate API
+
+У Яндекс переводчика (translate.yandex.ru) имеется REST API. Необходимо реализовать консольное
+приложение на одном из языков Java8, Groovy или Kotlin, которое переводит введенную
+английскую фразу на русский язык, пользуясь предложенным API.
+
+
+Terms of the Use of the Service
+ When using the Service the User shall include reference to the Yandex technology in the description
+ of the software application, in the respective help topic, on the official website of the software application,
+ as well as on all pages/screens where the data of the service “Yandex.Translate” is used, strictly over or
+ under the results of translation, in format of the following text:
+“Powered by Yandex.Translate” with the clickable hyperlink to the page http://translate.yandex.com/.
+Requirements for placing this text
+    This text must be shown:
+
+        In the description of the software product (on the About page).
+        In the help for the software product.
+        On the official website of the software product.
+        On all pages or screens where data from the service is used.
+
+JSON interface
+Request syntax
+
+https://translate.yandex.net/api/v1.5/tr.json/translate
+ ? key=<API key>      trnsl.1.1.20180929T182904Z.04ae991239ce7c70.ed74d48c471924265df9fbc510cfa67ad197f822
+ & text=<text to translate>     The source text must be URL-encoded.
+ & lang=<translation direction>     en-ru indicates translating from English to Russian.
+
+ Response codes
+
+ Explanations of possible response codes.
+ Value 	Description
+ 200 	Operation completed successfully
+ 401 	Invalid API key
+ 402 	Blocked API key
+ 404 	Exceeded the daily limit on the amount of translated text
+ 413 	Exceeded the maximum text size
+ 422 	The text cannot be translated
+ 501 	The specified translation direction is not supported
+
+curl -X POST -H "Content-Type: application/x-www-form-urlencoded" --data text=hello https://translate.yandex.net/api/v1.5/tr.json/translate?lang=en-ru&key=trnsl.1.1.20180929T182904Z.04ae991239ce7c70.ed74d48c471924265df9fbc510cfa67ad197f822
+
+{"code":401,"message":"API key is invalid"}
+{"code":200,"lang":"en-ru","text":["привет всем люди! \nэто-президент! \nЭй"]}
